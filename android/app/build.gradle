@@ -18,16 +18,14 @@ android {
     signingConfigs {
         release {
             def propsFile = rootProject.file('keystore.properties')
-            def props = new Properties()
             if (propsFile.exists()) {
+                def props = new Properties()
                 props.load(new FileInputStream(propsFile))
-            } else {
-                throw new FileNotFoundException('Error: missing keystore properties file')
+                storeFile = rootProject.file("keystore/app.keystore")
+                storePassword = props['storePassword']
+                keyAlias = props['keyAlias']
+                keyPassword = props['keyPassword']
             }
-            storeFile = rootProject.file("keystore/app.keystore")
-            storePassword = props['storePassword']
-            keyAlias = props['keyAlias']
-            keyPassword = props['keyPassword']
         }
     }
 
